@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2 } from "lucide-react";
+import { Loader2, Wand2 } from "lucide-react";
 
 interface MoodSelectorProps {
   onRecommend: (mood: string, scene: string, inventory: string) => void;
@@ -24,11 +24,12 @@ export function MoodSelector({ onRecommend, isLoading }: MoodSelectorProps) {
   };
 
   return (
-    <Card>
+    <Card className="border shadow-sm hover:shadow-md transition-shadow duration-300">
       <CardContent className="pt-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="text-sm font-medium mb-1 block">
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="space-y-2">
+            <label className="text-sm font-medium flex items-center gap-2">
+              <span className="text-lg">🤔</span>
               今の気分 <span className="text-red-500">*</span>
             </label>
             <Input
@@ -36,10 +37,12 @@ export function MoodSelector({ onRecommend, isLoading }: MoodSelectorProps) {
               value={mood}
               onChange={(e) => setMood(e.target.value)}
               disabled={isLoading}
+              className="transition-all focus:ring-2 focus:ring-amber-500/20"
             />
           </div>
-          <div>
-            <label className="text-sm font-medium mb-1 block">
+          <div className="space-y-2">
+            <label className="text-sm font-medium flex items-center gap-2">
+              <span className="text-lg">📍</span>
               シチュエーション <span className="text-red-500">*</span>
             </label>
             <Input
@@ -47,11 +50,14 @@ export function MoodSelector({ onRecommend, isLoading }: MoodSelectorProps) {
               value={scene}
               onChange={(e) => setScene(e.target.value)}
               disabled={isLoading}
+              className="transition-all focus:ring-2 focus:ring-amber-500/20"
             />
           </div>
-          <div>
-            <label className="text-sm font-medium mb-1 block">
-              自宅にある材料（任意）
+          <div className="space-y-2">
+            <label className="text-sm font-medium flex items-center gap-2">
+              <span className="text-lg">🧊</span>
+              自宅にある材料
+              <span className="text-xs text-muted-foreground font-normal">（任意）</span>
             </label>
             <Textarea
               placeholder="例: ジン, レモン, 砂糖（カンマ区切り）"
@@ -59,16 +65,24 @@ export function MoodSelector({ onRecommend, isLoading }: MoodSelectorProps) {
               onChange={(e) => setInventory(e.target.value)}
               disabled={isLoading}
               rows={2}
+              className="transition-all focus:ring-2 focus:ring-amber-500/20 resize-none"
             />
           </div>
-          <Button type="submit" className="w-full" disabled={isLoading || !mood || !scene}>
+          <Button
+            type="submit"
+            className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white shadow-lg hover:shadow-xl transition-all duration-300 h-12 text-base"
+            disabled={isLoading || !mood || !scene}
+          >
             {isLoading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                 提案中...
               </>
             ) : (
-              "カクテルを提案してもらう 🍸"
+              <>
+                <Wand2 className="mr-2 h-5 w-5" />
+                カクテルを提案してもらう 🍸
+              </>
             )}
           </Button>
         </form>
